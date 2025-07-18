@@ -35,10 +35,16 @@ jobs:
       - name: Show test coverage
         run: |
           if [ -f target/site/jacoco/jacoco.xml ]; then
-            COVERED=$(xmllint --xpath "string(//counter[@type='LINE']/@covered)" target/site/jacoco/jacoco.xml)
-            MISSED=$(xmllint --xpath "string(//counter[@type='LINE']/@missed)" target/site/jacoco/jacoco.xml)
+            COVERAGE_LINE=$(grep '<counter type="LINE"' target/site/jacoco/jacoco.xml)
+            if [ -z "$COVERAGE_LINE" ]; then
+              echo "No se encontró ningún contador de líneas en jacoco.xml"
+              exit 0
+            fi
+          
+            COVERED=$(echo "$COVERAGE_LINE" | grep -oP 'covered="\K[0-9]+' | paste -sd+ - | bc)
+            MISSED=$(echo "$COVERAGE_LINE" | grep -oP 'missed="\K[0-9]+' | paste -sd+ - | bc)
             TOTAL=$((COVERED + MISSED))
-
+          
             if [ "$TOTAL" -gt 0 ]; then
               COVERAGE=$(awk "BEGIN { printf \"%.2f\", ($COVERED / $TOTAL) * 100 }")
               echo "Cobertura de líneas: $COVERAGE%"
