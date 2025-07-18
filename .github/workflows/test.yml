@@ -1,4 +1,4 @@
-name: Test Java 21 Project
+name: Test & Coverage
 
 on:
   pull_request:
@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 21
+      - name: Set up Java 21
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
@@ -26,5 +26,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Run tests
-        run: mvn test
+      - name: Run tests with coverage
+        run: mvn clean verify
+
+      - name: Show coverage percentage
+        run: |
+          LINE_COVERAGE=$(grep -A 1 '<counter type="LINE"' target/site/jacoco/jacoco.xml | grep -oP 'covered="\d+" missed="\d+"' | awk '{c+=$1; m+=$2} END {print c / (c + m) * 100}' FS='[="]' OFMT="%.2f")
+          echo "Cobertura de líneas: ${LINE_COVERAGE}%"
