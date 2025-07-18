@@ -36,29 +36,6 @@ jobs:
       - name: Install xmllint
         run: sudo apt-get update && sudo apt-get install -y libxml2-utils
 
-      - name: Show test coverage
-        run: |
-          if [ -f target/site/jacoco/jacoco.xml ]; then
-            COVERAGE_LINE=$(grep '<counter type="LINE"' target/site/jacoco/jacoco.xml)
-            if [ -z "$COVERAGE_LINE" ]; then
-              echo "No se encontró ningún contador de líneas en jacoco.xml"
-              exit 0
-            fi
-          
-            COVERED=$(echo "$COVERAGE_LINE" | grep -oP 'covered="\K[0-9]+' | paste -sd+ - | bc)
-            MISSED=$(echo "$COVERAGE_LINE" | grep -oP 'missed="\K[0-9]+' | paste -sd+ - | bc)
-            TOTAL=$((COVERED + MISSED))
-          
-            if [ "$TOTAL" -gt 0 ]; then
-              COVERAGE=$(awk "BEGIN { printf \"%.2f\", ($COVERED / $TOTAL) * 100 }")
-              echo "Cobertura de líneas: $COVERAGE%"
-            else
-              echo "No se pudo calcular la cobertura (total de líneas = 0)"
-            fi
-          else
-            echo "Archivo jacoco.xml no encontrado. Asegúrate de que 'mvn verify' lo genera correctamente."
-          fi
-          
       - name: Report coverage to PR
         uses: madrapps/jacoco-report@v1.2
         with:
