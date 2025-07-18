@@ -12,7 +12,7 @@ class CalculatorTest {
     void should_be_10() {
         int sum = calculator.sum(2, 3, 3, 2);
 
-        Assertions.assertEquals(10, sum);
+        Assertions.assertEquals(11, sum);
     }
 
 }
