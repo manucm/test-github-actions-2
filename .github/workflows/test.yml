@@ -29,6 +29,9 @@ jobs:
       - name: Run tests with coverage
         run: mvn clean verify
 
+      - name: Install xmllint
+        run: sudo apt-get update && sudo apt-get install -y libxml2-utils
+
       - name: Show test coverage
         run: |
           if [ -f target/site/jacoco/jacoco.xml ]; then
