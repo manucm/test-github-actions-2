@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><!DOCTYPE report PUBLIC "-//JACOCO//DTD Report 1.1//EN"
+        "report.dtd">
+<report name="Mi Proyecto con Java 21">
+    <sessioninfo id="macbook-pro-de-manuel-1.home-7857cda6" start="1752880363539" dump="1752880364307"/>
+    <package name="com/manucm/githubactions/utils">
+        <class name="com/manucm/githubactions/utils/Calculator" sourcefilename="Calculator.java">
+            <method name="&lt;init&gt;" desc="()V" line="5">
+                <counter type="INSTRUCTION" missed="0" covered="3"/>
+                <counter type="LINE" missed="0" covered="1"/>
+                <counter type="COMPLEXITY" missed="0" covered="1"/>
+                <counter type="METHOD" missed="0" covered="1"/>
+            </method>
+            <method name="sum" desc="([I)I" line="10">
+                <counter type="INSTRUCTION" missed="5" covered="8"/>
+                <counter type="BRANCH" missed="1" covered="1"/>
+                <counter type="LINE" missed="1" covered="2"/>
+                <counter type="COMPLEXITY" missed="1" covered="1"/>
+                <counter type="METHOD" missed="0" covered="1"/>
+            </method>
+            <method name="div" desc="(DD)D" line="17">
+                <counter type="INSTRUCTION" missed="13" covered="0"/>
+                <counter type="BRANCH" missed="2" covered="0"/>
+                <counter type="LINE" missed="3" covered="0"/>
+                <counter type="COMPLEXITY" missed="2" covered="0"/>
+                <counter type="METHOD" missed="1" covered="0"/>
+            </method>
+            <counter type="INSTRUCTION" missed="18" covered="11"/>
+            <counter type="BRANCH" missed="3" covered="1"/>
+            <counter type="LINE" missed="4" covered="3"/>
+            <counter type="COMPLEXITY" missed="3" covered="2"/>
+            <counter type="METHOD" missed="1" covered="2"/>
+            <counter type="CLASS" missed="0" covered="1"/>
+        </class>
+        <sourcefile name="Calculator.java">
+            <line nr="5" mi="0" ci="3" mb="0" cb="0"/>
+            <line nr="10" mi="0" ci="4" mb="1" cb="1"/>
+            <line nr="11" mi="5" ci="0" mb="0" cb="0"/>
+            <line nr="13" mi="0" ci="4" mb="0" cb="0"/>
+            <line nr="17" mi="4" ci="0" mb="2" cb="0"/>
+            <line nr="18" mi="5" ci="0" mb="0" cb="0"/>
+            <line nr="20" mi="4" ci="0" mb="0" cb="0"/>
+            <counter type="INSTRUCTION" missed="18" covered="11"/>
+            <counter type="BRANCH" missed="3" covered="1"/>
+            <counter type="LINE" missed="4" covered="3"/>
+            <counter type="COMPLEXITY" missed="3" covered="2"/>
+            <counter type="METHOD" missed="1" covered="2"/>
+            <counter type="CLASS" missed="0" covered="1"/>
+        </sourcefile>
+        <counter type="INSTRUCTION" missed="18" covered="11"/>
+        <counter type="BRANCH" missed="3" covered="1"/>
+        <counter type="LINE" missed="4" covered="3"/>
+        <counter type="COMPLEXITY" missed="3" covered="2"/>
+        <counter type="METHOD" missed="1" covered="2"/>
+        <counter type="CLASS" missed="0" covered="1"/>
+    </package>
+    <counter type="INSTRUCTION" missed="18" covered="11"/>
+    <counter type="BRANCH" missed="3" covered="1"/>
+    <counter type="LINE" missed="4" covered="3"/>
+    <counter type="COMPLEXITY" missed="3" covered="2"/>
+    <counter type="METHOD" missed="1" covered="2"/>
+    <counter type="CLASS" missed="0" covered="1"/>
+</report>

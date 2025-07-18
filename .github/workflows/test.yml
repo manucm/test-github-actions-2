@@ -33,9 +33,6 @@ jobs:
       - name: Run tests with coverage
         run: mvn clean verify
 
-      - name: Install xmllint
-        run: sudo apt-get update && sudo apt-get install -y libxml2-utils
-
       - name: Report coverage to PR
         uses: madrapps/jacoco-report@v1.2
         with:
