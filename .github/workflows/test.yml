@@ -31,5 +31,18 @@ jobs:
 
       - name: Show coverage percentage
         run: |
-          LINE_COVERAGE=$(grep -A 1 '<counter type="LINE"' target/site/jacoco/jacoco.xml | grep -oP 'covered="\d+" missed="\d+"' | awk '{c+=$1; m+=$2} END {print c / (c + m) * 100}' FS='[="]' OFMT="%.2f")
-          echo "Cobertura de líneas: ${LINE_COVERAGE}%"
+          if [ -f target/site/jacoco/jacoco.xml ]; then
+            COVERED=$(grep '<counter type="LINE"' target/site/jacoco/jacoco.xml | sed -n 's/.*covered="\([0-9]*\)".*/\1/p')
+            MISSED=$(grep '<counter type="LINE"' target/site/jacoco/jacoco.xml | sed -n 's/.*missed="\([0-9]*\)".*/\1/p')
+
+            if [ -n "$COVERED" ] && [ -n "$MISSED" ] && [ "$((COVERED + MISSED))" -ne 0 ]; then
+              TOTAL=$((COVERED + MISSED))
+              PERCENT=$(awk "BEGIN { printf \"%.2f\", ($COVERED / $TOTAL) * 100 }")
+              echo "Cobertura de líneas: $PERCENT%"
+            else
+              echo "No se pudo calcular la cobertura de líneas (valores no encontrados)."
+            fi
+          else
+            echo "Archivo jacoco.xml no encontrado. Asegúrate de que 'mvn verify' lo genera correctamente."
+          fi
+      
