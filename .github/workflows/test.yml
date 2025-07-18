@@ -29,20 +29,20 @@ jobs:
       - name: Run tests with coverage
         run: mvn clean verify
 
-      - name: Show coverage percentage
+      - name: Show test coverage
         run: |
           if [ -f target/site/jacoco/jacoco.xml ]; then
-            COVERED=$(grep '<counter type="LINE"' target/site/jacoco/jacoco.xml | sed -n 's/.*covered="\([0-9]*\)".*/\1/p')
-            MISSED=$(grep '<counter type="LINE"' target/site/jacoco/jacoco.xml | sed -n 's/.*missed="\([0-9]*\)".*/\1/p')
+            COVERED=$(xmllint --xpath "string(//counter[@type='LINE']/@covered)" target/site/jacoco/jacoco.xml)
+            MISSED=$(xmllint --xpath "string(//counter[@type='LINE']/@missed)" target/site/jacoco/jacoco.xml)
+            TOTAL=$((COVERED + MISSED))
 
-            if [ -n "$COVERED" ] && [ -n "$MISSED" ] && [ "$((COVERED + MISSED))" -ne 0 ]; then
-              TOTAL=$((COVERED + MISSED))
-              PERCENT=$(awk "BEGIN { printf \"%.2f\", ($COVERED / $TOTAL) * 100 }")
-              echo "Cobertura de líneas: $PERCENT%"
+            if [ "$TOTAL" -gt 0 ]; then
+              COVERAGE=$(awk "BEGIN { printf \"%.2f\", ($COVERED / $TOTAL) * 100 }")
+              echo "Cobertura de líneas: $COVERAGE%"
             else
-              echo "No se pudo calcular la cobertura de líneas (valores no encontrados)."
+              echo "No se pudo calcular la cobertura (total de líneas = 0)"
             fi
           else
             echo "Archivo jacoco.xml no encontrado. Asegúrate de que 'mvn verify' lo genera correctamente."
           fi
-      
+
