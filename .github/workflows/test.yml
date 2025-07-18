@@ -55,11 +55,10 @@ jobs:
             echo "Archivo jacoco.xml no encontrado. Asegúrate de que 'mvn verify' lo genera correctamente."
           fi
           
-      - name: Add coverage to PR
-        id: jacoco
+      - name: Report coverage to PR
         uses: madrapps/jacoco-report@v1.2
         with:
-          paths: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml
+          paths: target/site/jacoco/jacoco.xml
           token: ${{ secrets.GITHUB_TOKEN }}
           min-coverage-overall: 40
           min-coverage-changed-files: 60
