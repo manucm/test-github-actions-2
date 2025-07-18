@@ -32,32 +32,26 @@ jobs:
       - name: Install xmllint
         run: sudo apt-get update && sudo apt-get install -y libxml2-utils
 
-      - name: Show detailed test coverage
+      - name: Show test coverage
         run: |
           if [ -f target/site/jacoco/jacoco.xml ]; then
-            LINE_COVERED=$(grep '<counter type="LINE"' target/site/jacoco/jacoco.xml | grep -oP 'covered="\K[0-9]+' | paste -sd+ - | bc)
-            LINE_MISSED=$(grep '<counter type="LINE"' target/site/jacoco/jacoco.xml | grep -oP 'missed="\K[0-9]+' | paste -sd+ - | bc)
-            LINE_TOTAL=$((LINE_COVERED + LINE_MISSED))
-          
-            INSTR_COVERED=$(grep '<counter type="INSTRUCTION"' target/site/jacoco/jacoco.xml | grep -oP 'covered="\K[0-9]+' | paste -sd+ - | bc)
-            INSTR_MISSED=$(grep '<counter type="INSTRUCTION"' target/site/jacoco/jacoco.xml | grep -oP 'missed="\K[0-9]+' | paste -sd+ - | bc)
-            INSTR_TOTAL=$((INSTR_COVERED + INSTR_MISSED))
-          
-            if [ "$LINE_TOTAL" -gt 0 ]; then
-              LINE_PCT=$(awk "BEGIN { printf \"%.2f\", ($LINE_COVERED / $LINE_TOTAL) * 100 }")
-              echo "Cobertura de líneas: $LINE_PCT%"
-            else
-              echo "No se pudo calcular cobertura de líneas (total=0)"
+            COVERAGE_LINE=$(grep '<counter type="LINE"' target/site/jacoco/jacoco.xml)
+            if [ -z "$COVERAGE_LINE" ]; then
+              echo "No se encontró ningún contador de líneas en jacoco.xml"
+              exit 0
             fi
           
-            if [ "$INSTR_TOTAL" -gt 0 ]; then
-              INSTR_PCT=$(awk "BEGIN { printf \"%.2f\", ($INSTR_COVERED / $INSTR_TOTAL) * 100 }")
-              echo "Cobertura de instrucciones: $INSTR_PCT%"
+            COVERED=$(echo "$COVERAGE_LINE" | grep -oP 'covered="\K[0-9]+' | paste -sd+ - | bc)
+            MISSED=$(echo "$COVERAGE_LINE" | grep -oP 'missed="\K[0-9]+' | paste -sd+ - | bc)
+            TOTAL=$((COVERED + MISSED))
+          
+            if [ "$TOTAL" -gt 0 ]; then
+              COVERAGE=$(awk "BEGIN { printf \"%.2f\", ($COVERED / $TOTAL) * 100 }")
+              echo "Cobertura de líneas: $COVERAGE%"
             else
-              echo "No se pudo calcular cobertura de instrucciones (total=0)"
+              echo "No se pudo calcular la cobertura (total de líneas = 0)"
             fi
           else
-            echo "Archivo jacoco.xml no encontrado."
+            echo "Archivo jacoco.xml no encontrado. Asegúrate de que 'mvn verify' lo genera correctamente."
           fi
-
 
