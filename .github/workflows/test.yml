@@ -72,4 +72,4 @@ jobs:
           fail-on-branches-decrease: false
           branches-decrease-limit: 100
           generate-workflow-summary: true
-          workflow-summary-heading: JaCoCo Test Coverage Summary
+          workflow-summary-heading: Coverage

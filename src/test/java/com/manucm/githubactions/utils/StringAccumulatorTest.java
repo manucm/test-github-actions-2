@@ -14,4 +14,22 @@ class StringAccumulatorTest {
         Assertions.assertEquals("Guillermo-Nico", acc);
     }
 
+    @Test
+    void should_throw_exception_if_more_than_10_elements() {
+        Assertions.assertThrows(RuntimeException.class, () ->
+                accumulator.acc(
+                        "one",
+                        "two",
+                        "three",
+                        "four",
+                        "five",
+                        "six",
+                        "seven",
+                        "eight",
+                        "nine",
+                        "ten",
+                        "eleven"
+                ));
+    }
+
 }
