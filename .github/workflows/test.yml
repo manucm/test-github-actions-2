@@ -61,4 +61,7 @@ jobs:
           summary-filename: coverage-summary.json
           fail-if-coverage-less-than: 60
           generate-workflow-summary: true
+          colors: '#4c1 #97ca00 #a4a61d #dfb317 #fe7d37 #e05d44'
+          intervals: 100 90 80 70 60 0
+          workflow-summary-heading: JaCoCo Test Coverage Summary
 
