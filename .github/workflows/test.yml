@@ -50,4 +50,5 @@ jobs:
         with:
           generate-branches-badge: true
           fail-if-coverage-less-than: 60
+          generate-workflow-summary: true
 
