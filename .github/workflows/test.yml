@@ -73,3 +73,10 @@ jobs:
           branches-decrease-limit: 100
           generate-workflow-summary: true
           workflow-summary-heading: Coverage
+
+      - name: Upload JaCoCo HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-html-report
+          path: target/site/jacoco
+
