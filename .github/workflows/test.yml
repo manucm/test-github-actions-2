@@ -42,3 +42,11 @@ jobs:
           min-coverage-changed-files: 80
           debug-mode: false
 
+      - name: Build with Maven
+        run: mvn -B test
+
+      - name: Generate JaCoCo Badge
+        uses: cicirello/jacoco-badge-generator@v2
+        with:
+          generate-branches-badge: true
+
