@@ -49,4 +49,5 @@ jobs:
         uses: cicirello/jacoco-badge-generator@v2
         with:
           generate-branches-badge: true
+          fail-if-coverage-less-than: 60
 
